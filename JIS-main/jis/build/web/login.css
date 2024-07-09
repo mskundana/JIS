@@ -1,0 +1,120 @@
+
+.main-container{
+    background-image: url("./imgs/bg-login.jpg");
+    height: 150vh;
+    background-size: cover;
+    padding: 10px;
+}
+.logo-con{
+    display: flex;
+    background-color: aliceblue;
+    height: 80px;
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    color: #082550;
+    margin-top: 77px;
+    margin-left: 77px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.logo-head{
+    font-size: 30px;
+    font-weight: bold;
+}
+.login-container{
+    background-color: rgb(229, 241, 251);
+    width: 30vw;
+    height: 378px;
+    margin-left: 50vw;
+    border-radius: 13px;
+}
+.login-sel{
+    display: flex;
+    justify-content: space-around;
+    color: #082550;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.login-form{
+    background-color: rgb(229, 241, 251);
+    width: 35vw;
+    margin-left: 50vw;
+    border-radius: 13px;
+    padding: 40px;
+    padding-right: 60px;
+    padding-left: 50px;
+    padding-bottom: 30px;
+}
+.login-form-heading{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;    
+    text-align: center;
+    color: #082550;
+    font-size: 32px;
+    margin-top: 0px;
+    font-weight: 600;
+}
+.login-label{
+    color: #082550;
+    font-size: 18px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.login-input{
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #082550;
+    padding-left: 12px;
+}
+.login-input:focus{
+    box-shadow: 1px 1px 5px 2px #d0d7ff;
+    outline: none;
+    border: 1px solid #082550;
+    font-size: 15px;
+    height: 45px;
+}
+.login-btn{
+    margin-top: 30px;
+    align-self: center;
+    background-color: #0049b7;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    padding-bottom: 8px;
+    color: #ffffff;
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid #0049b7;
+    margin-bottom: -10px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.login-btn:hover{
+    border: 2px solid #0049b7;
+    background-color: #ffffff;
+    color: #0049b7;
+}
+.login-container-2{
+    background-color: #f9f9f9;
+    padding: 60px;
+}
+.req{
+    color: red;
+    font-size: 12px;
+    margin-bottom: 0px;
+    margin-top: 8px;
+}
+.create-ac-btn{
+    color: #082550;
+    cursor: pointer;
+    margin-top: 15px;
+    background: none;
+    border: none;
+    display: inline-block;
+    font-weight: 500;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}

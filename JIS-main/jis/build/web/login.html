@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="login.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="logo-con">
+                <h1 class="logo-head">JIS</h1>
+            </div>
+            <form id="login-form" class="login-form">
+                <h1 class="login-form-heading">Login</h1>
+                <label for="login-username" class="d-block login-label" >Username</label>
+                <input type="text" class="login-input" id="login-username" onblur="reqFunc('login-username', 'uname-req')" />
+                <p id="uname-req" class="req d-none">*required</p>
+                <label for="login-pass" class="d-block login-label" >Password</label>
+                <input type="password" class="login-input" id="login-pass" onblur="reqFunc('login-pass', 'pass-req')" />
+                <p id="pass-req" class="req d-none">*required</p>
+                <div class="text-center">
+                    <button class="login-btn" type="button" onclick="login()">Login</button>
+                </div>
+                <p id="login-err" class="req"></p>
+                <p class="create-ac-btn" id="create-ac-btn">Didn't have an account? Request Login</p>
+            </form>
+            <form id="signup-form" class="login-form">
+                <h1 class="login-form-heading">Request Login</h1>
+                <label for="signup-email" class="d-block login-label" >Email</label>
+                <input name="email" type="email" class="login-input" id="signup-email" onblur="reqFunc('signup-email', 'email-req')" />
+                <p id="email-req" class="req d-none">*required</p>
+                <label for="signup-uname" class="d-block login-label" >Username</label>
+                <input name="suname" type="text" class="login-input" id="signup-uname" onblur="reqFunc('signup-uname', 'suname-req')" />
+                <p id="suname-req" class="req d-none">*required</p>
+                <label for="signup-uname" class="d-block login-label" >Type</label>
+                <select name="sutype" class="login-input" id="signup-type" onblur="reqFunc('signup-type', 'sutype-req')" >
+                    <option>Judge</option>
+                    <option>Lawyer</option>
+                    <option selected>Victim</option>
+                </select>
+
+                <p id="sutype-req" class="req d-none">*required</p>
+                <label for="signup-pass" class="d-block login-label" >Password</label>
+                <input name="spass" type="password" class="login-input" id="signup-pass" onblur="reqFunc('signup-pass', 'spass-req')" />
+                <p id="spass-req" class="req d-none">*required</p>
+                <label for="signup-cpass" class="d-block login-label" >Confirm Password</label>
+                <input name="scpass" type="password" class="login-input" id="signup-cpass" onblur="reqFunc('signup-cpass', 'scpass-req')" />
+                <p id="scpass-req" class="req d-none">*required</p>
+                <div class="text-center">
+                    <button class="login-btn" type="button" onclick="signup()">Request Login</button>
+                </div>
+                <p id="signup-err" class="req"></p>
+                <p class="create-ac-btn" id="goto-login-btn">Already have an account? Log in</p>
+            </form>
+        </div>
+    </body>
+    <script>
+
+        window.onload = function () {
+            let uname = sessionStorage.getItem("uname");
+            if (uname != undefined) {
+                window.location.replace("./home.html");
+            }
+        };
+    </script>
+    <script src="login.js"></script>
+</html>

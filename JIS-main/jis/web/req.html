@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Login Requests</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <style>
+            body{
+                margin:0;
+                font-family: 'Arial', sans-serif;
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                background-color: #2047bd;
+            }
+            .approve{
+                background-color: #000080;
+                color: white;
+
+            }
+            .reject{
+                background-color: #000080;
+                color: white;
+            }
+
+            ul{
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #000080;
+
+                top: 0;
+                left: 0;
+                right: 0;
+                display:block;
+
+                align-items: center;
+                justify-content: center;
+
+
+            }
+            li a img{
+
+                width: 30px;
+                height: 30px;
+                padding-right: 1000px;
+            }
+            li{
+                float:right;
+
+            }
+
+            li a{
+                display: block;
+                color: white;
+                padding:14px 16px;
+                text-decoration:none;
+
+
+            }
+            table{
+
+                width:70%;
+                margin-top: 40px;
+                font-size: 20px;
+                padding-right: 20px;
+
+            }
+            th{
+                color: blue;
+            }
+            button{
+                background-color: blue;
+                cursor: pointer;
+                padding: 5px 10px;
+                padding-right: 10px;
+                border: 1px solid blue;
+                border-radius: 11px;
+                padding: 9px;
+                color: #fff;
+                font-weight: bold;
+                margin: 5px;
+
+            }
+            .logo{
+                display: flex;
+                background-color: aliceblue;
+                height: 60px;
+                width: 60px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px;
+                color: #082550;
+                margin: 9px;
+                margin-left: 21px;
+                text-decoration: none;
+            }
+            .logout-btn{
+                align-self: center;
+                background-color: #0049b7;
+                border-radius: 8px;
+                padding: 11px;
+                color: #ffffff;
+                width: 120px;
+                cursor: pointer;
+                border: 1px solid #fff;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .logout-btn:hover{
+                background-color: #fff;
+                color:#0049b7;
+            }
+            .h-con{
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 40%;
+            }
+            .req-link{
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+
+
+
+        </style>
+    </head>
+    <body>
+
+        <header>
+            <a href="./home.html" class="logo">
+                <p>JIS</p>
+            </a>
+            <div id="header" class="h-con">
+                <a id="a1" class="req-link" href="./req.html">Login Requests</a>
+                <a class="req-link" href="./search.html">Search Case</a>
+                <div style="text-align:center;">
+                    <button class="logout-btn" type="button" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <table border="0" align="center">
+            <thead>
+                <tr>
+
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>DESIGNATION</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody id="display" align="center"></tbody>
+        </table>
+        <script>
+            var arrayOfObjects = [{NAME: 'John', EMAIL: 'john2003@gmail.com', DESIGNATION: 'Lawyer'},
+                {NAME: 'Jadeja', EMAIL: 'jaddu123@gmail.com', DESIGNATION: 'Victim'},
+                {NAME: 'Dhoni', EMAIL: 'msdhonisakshi@gmail.com', DESIGNATION: 'Judge'},
+                {NAME: 'Alice', EMAIL: 'alice789@gmail.com', DESIGNATION: 'Lawyer'}];
+
+            var display = document.getElementById("display");
+            let logout = () => {
+                sessionStorage.removeItem("uname");
+                window.location.replace("./login.html");
+            };
+            window.onload = function () {
+                getReqDetails();
+                let uname = sessionStorage.getItem("uname");
+                if (uname != "admin") {
+                    window.location.replace("./home.html");
+                }
+                ;
+            };
+            let renderReq = arrayOfObjects => {
+                arrayOfObjects.map(currentObject => {
+                    // console.log("NAME":+currentObject.NAME+",EMAIL: "+currentObject.EMAIL+", DESIGNATION: "+currentObject.DESIGNATION);
+
+                    var row = document.createElement("tr");
+                    var cellName = document.createElement("td");
+                    cellName.textContent = currentObject.NAME;
+                    row.appendChild(cellName);
+
+
+                    var cellEmail = document.createElement("td");
+                    cellEmail.textContent = currentObject.EMAIL;
+                    row.appendChild(cellEmail);
+
+                    var cellDesignation = document.createElement("td");
+                    cellDesignation.textContent = currentObject.DESIGNATION;
+                    row.appendChild(cellDesignation);
+
+
+                    var cellButtons = document.createElement("td");
+                    var approveButton = document.createElement("button");
+                    approveButton.textContent = "Approve";
+                    approveButton.onclick = async () => {
+                        let res;
+                        let b = `/jis/Approve?uname=${currentObject.NAME}`;
+                        await fetch(b, {
+                            method: 'POST'
+                        })
+                                .then(response => response.text())
+                                .then(data => res = data);
+                        if (parseInt(res) === 0) {
+                            alert("Approve clicked for " + currentObject.NAME);
+                            display.removeChild(row);
+                        } else {
+                            alert("error");
+                        }
+                    };
+                    cellButtons.appendChild(approveButton);
+
+                    var rejectButton = document.createElement("button");
+                    rejectButton.textContent = "Reject";
+                    rejectButton.onclick = async () => {
+                        let res;
+                        let b = `/jis/Reject?uname=${currentObject.NAME}`;
+                        await fetch(b, {
+                            method: 'POST'
+                        })
+                                .then(response => response.text())
+                                .then(data => res = data);
+                        if (parseInt(res) === 0) {
+                            alert("Rejected for " + currentObject.NAME);
+                            display.removeChild(row);
+                        } else {
+                            alert("error");
+                        }
+                    };
+                    cellButtons.appendChild(rejectButton);
+
+                    row.appendChild(cellButtons);
+                    display.appendChild(row);
+                });
+            };
+            const getReqDetails = async () => {
+                let b = `/jis/GetReq`;
+                let loginreq;
+                await fetch(b).then(response => response.text())
+                        .then(data => loginreq = data);
+                let reqArr = loginreq.split("+").map(each => {
+                    if (each != "") {
+                        let ss = each.split("|");
+                        return {"NAME": ss[0], "EMAIL": ss[1], "DESIGNATION": ss[2]};
+                    }
+                    ;
+                });
+                reqArr.splice(-1, 1);
+                renderReq(reqArr);
+            };
+
+        </script>
+
+    </body>          
+</html>

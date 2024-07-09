@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                background-color: #2047bd;
+            }
+            .img{
+                height: 10px;
+                width: 10px;
+                border-radius: 20px;
+            }
+
+            nav {
+                display: flex;
+                flex-direction: column;
+                border-right: 2px solid #ddd;
+                padding: 20px;
+                height: calc(100vh - 40px);
+            }
+            nav a {
+                text-decoration: none;
+                color: blueviolet;
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid  yellowgreen ;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .widgets-container {
+                display: flex;
+                justify-content: space-around;
+                padding: 50px;
+                gap: 30px;
+            }
+            .widget {
+                flex: 1;
+                padding: 38px;
+                border: 2px solid black;
+                border-radius: 10px;
+                height: 300px;
+                width: 21vw;
+            }
+            canvas {
+                max-width: 100%;
+                height: auto;
+            }
+            .s-fees{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding-top: 25px;
+                padding-bottom: 50px;
+            }
+            .logo{
+                display: flex;
+                background-color: aliceblue;
+                height: 60px;
+                width: 60px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px;
+                color: #082550;
+                margin: 9px;
+                margin-left: 21px;
+            }
+            .logout-btn{
+                align-self: center;
+                background-color: #0049b7;
+                border-radius: 8px;
+                padding: 11px;
+                color: #ffffff;
+                width: 120px;
+                cursor: pointer;
+                border: 1px solid #fff;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .logout-btn:hover{
+                background-color: #fff;
+                color:#0049b7;
+            }
+            .h-con{
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 50%;
+            }
+            .req-link{
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .hide{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <p>JIS</p>
+            </div>
+            <div id="header" class="h-con">
+                <a id="a1" class="req-link" href="./req.html">Login Requests</a>
+                <a class="req-link" href="./search.html">Search Case</a>
+                <a id="a3" class="req-link" href="./add.html">Add Case</a>
+                <div style="text-align:center;">
+                    <button class="logout-btn" type="button" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+        <div style="display: flex; justify-content: center;">
+
+            <div class="widgets-container">
+
+                <div class="widget">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                
+                <div class="widget">
+                    <canvas id="lineGraph" style="height: 250px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+                        let a1 = document.getElementById("a1");
+                        let a3 = document.getElementById("a3");
+                        let h = document.getElementById("header");
+                        if (sessionStorage.getItem("uname") != "admin") {
+                            a1.classList.add("hide");
+                            a3.classList.add("hide");
+                            h.style.width = "25%";
+                        }
+                        var pieChartData = {
+                            labels: ["Success", "Pending", "Failed", "Processing"],
+                            datasets: [{
+                                    data: [30, 20, 15, 35],
+                                    backgroundColor: ["#4CAF50", "#FFC107", "#FF5252", "#2196F3"]
+                                }]
+                        };
+                        var pieChartOptions = {
+                            responsive: true
+                        };
+                        var pieChart = new Chart(document.getElementById('pieChart'), {
+                            type: 'pie',
+                            data: pieChartData,
+                            options: pieChartOptions
+                        });
+                        var lineGraphData = {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+                            datasets: [{
+                                    label: 'No. of Lawyers',
+                                    data: [5, 8, 12, 6, 10],
+                                    borderColor: '#2196F3',
+                                    fill: false
+                                }]
+                        };
+                        var lineGraphOptions = {
+                            responsive: true,
+                            scales: {
+                                x: [{
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'No. of Cases'
+                                        }
+                                    }],
+                                y: [{
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'No. of Lawyers'
+                                        }
+                                    }]
+                            }
+                        };
+                        var lineGraph = new Chart(document.getElementById('lineGraph'), {
+                            type: 'line',
+                            data: lineGraphData,
+                            options: lineGraphOptions
+                        });
+                        window.onload = function () {
+                            let uname = sessionStorage.getItem("uname");
+                            if (uname == undefined) {
+                                window.location.replace("./login.html");
+                            }
+                            ;
+                        };
+                        let logout = () => {
+                            sessionStorage.removeItem("uname");
+                            window.location.replace("./login.html");
+                        };
+
+        </script>
+    </body>
+</html>

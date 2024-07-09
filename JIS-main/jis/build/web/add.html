@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"> 
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+
+
+
+
+        <title>
+            Add Case
+        </title>
+        <style>
+            body{
+                font-family: 'Arial', sans-serif;
+            }
+            .two{
+                background-color: blue;
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                background-color: #2047bd;
+            }
+            table{
+                background-color: rgb(225, 224, 235);
+            }
+            .logo{
+                display: flex;
+                background-color: aliceblue;
+                height: 60px;
+                width: 60px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px;
+                color: #082550;
+                margin: 9px;
+                margin-left: 21px;
+                text-decoration: none;
+                padding-top: 15px;
+            }
+            .logout-btn{
+                align-self: center;
+                background-color: #0049b7;
+                border-radius: 8px;
+                padding: 11px;
+                color: #ffffff;
+                width: 120px;
+                cursor: pointer;
+                border: 1px solid #fff;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .logout-btn:hover{
+                background-color: #fff;
+                color:#0049b7;
+            }
+            .h-con{
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 40%;
+            }
+            .req-link{
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <header>
+            <a href="./home.html" class="logo">
+                <p>JIS</p>
+            </a>
+            <div id="header" class="h-con">
+                <a id="a1" class="req-link" href="./req.html">Login Requests</a>
+                <a class="req-link" href="./search.html">Search Case</a>
+                <div style="text-align:center;">
+                    <button class="logout-btn" type="button" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+        <div class="bg-primry fixed-relative card " >
+        
+            <form class="form-control" method="post" action="Add">
+        
+              <div class="card-body"> 
+            <table border="1" align="center">
+                <tr><td>   <br><img src="./imgs/def.jpeg" width="50px"><br></td></tr>
+                <tr>  <td>
+            <label>Name Of The Defendant:
+                <input name="defName" type="text" placeholder="Name of the Defandant" class="form-control-md">
+            </label>
+               </td><td>
+            <label >&nbsp&nbsp&nbsp Address Of The Defendant:
+                <input name="defAddress" type="text"> 
+            </label></td></tr>
+            <tr><td>
+            <label><br><br>Crime Type:   
+                <select name="ctype">
+                <option>Theft</option>
+                <option>Arson</option>
+                <option>Murder</option>
+                <option>Civil Case</option>
+            </select>
+            </label>
+            </td></tr>
+            <tr><td>
+            <label><br><br>Status: 
+                <select name="status">
+                <option>Current</option>
+                <option>Pending</option>
+                <option>Completed</option>
+            </select>
+            </label>
+            </td></tr>
+            <tr>
+            <td>
+            <label><br><br>When Committed Date:
+                <input name="comDate" type="date" placeholder="When Committed Date"><br>
+            </label>
+            </td>
+            
+        
+            <td>
+            <label><br><br>When Committed Location:
+            <i class='fas fa-map-marker-alt' href=""style='font-size:35px;color:red'></i>
+            <input name="comLoc" type="text" placeholder="When Committed Location"><br>
+            </label></td></tr>
+            <tr><td >
+                <br><img src="./imgs/arrest.jpeg" width="50px"></td></tr>
+             <tr><td>   
+            <label><br>Name Of the Arresting  Officer:
+                <input name="offName" type="text" placeholder="Name of the arresting officer">
+            </label>
+            </td>
+            <td>
+            <label><br>&nbsp&nbsp Date of Arresting:
+                <input name="arrDate" type="date" placeholder="Date of the arresting" >
+            </label></td></tr>
+            <tr><td>
+            <label><br><br>Court Case:
+                <input name="cin" type="text" placeholder="CIN" required ><br>
+            </label><br><br></td></tr>
+            <tr><td>
+            <label><br><br>Date Of Hearing For Each Case:
+                <input name="hearDate" type="date" ><br>
+            </label><br><br>
+            </td>
+            <td>
+            <label><br><br>Vacant Slots On Any Working Day:
+                <input name="vacSlot" type="date"><br>
+            </label><br><br>
+            </td></tr>
+            <tr><td>
+                <tr>
+                <td>
+                    <br><br>Reason:<textarea name="reason"></textarea><br></td>
+                <td><br><br>
+                    Assign New Hearing Date: <input name="newHearDate" type="date">
+                </td></tr>
+            <br><br>
+            <tr><td>
+            <label><br><br>Case Details Of Hearing:
+                <textarea name="hearDetails"></textarea>
+            </label><br><br></td></tr>
+            <tr><td>
+                <tr><td>
+                 <br><img src="./imgs/judge.jpeg" width="60px">
+                 </td></tr>
+                 <tr><td>   
+                         <br>Name Of Judge:<input name="judgeName" type="text">
+                </td>
+                <td>
+                <br>PP:<input name="pp" type="text">
+                </td></tr>
+                <tr><td>
+                        <br><br>Starting Date:<input name="stDate" type="date"><br><br>
+                </td><td>
+                    <br><br>Completed Date:<input name="endDate" type="date"><br><br>
+            </td></tr></table>
+            <br>
+            <br>
+            <div align="center" >
+             <div class=" form-control-lg ">
+            
+            <button  class="btn btn-primary btn-xl two">
+                <i>Add Cases</i>
+            </button>    
+            
+            </div>
+            </div>
+        </div>
+        </form>
+        </div>
+       
+     
+    </body>
+    <script>
+        let logout = () => {
+                            sessionStorage.removeItem("uname");
+                            window.location.replace("./login.html");
+                        };
+        window.onload = function () {
+                let uname = sessionStorage.getItem("uname");
+                if (uname != "admin") {
+                    window.location.replace("./home.html");
+                }
+                ;
+            };
+    </script>
+</html>

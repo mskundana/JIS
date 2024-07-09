@@ -1,0 +1,176 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Search Cases</title>
+ <link rel="stylesheet" href="./search.css">
+<script src ="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+  <div class="search-box">
+   <div class="row">  
+      
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+<button><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+</svg></button>
+</div> 
+
+ <div class="result-box">
+</div>
+</div>
+<table id="myTable">
+  <tr class="header">
+    <th style="width:25%;">CID</th>
+    <th style="width:25%;">Name of Defendent</th>
+    <th style="width:25%;">Crime Type</th>
+    <th style="width:25%;">Status</th>
+  </tr>
+  <colgroup>
+  <col span="4" style="background-color: #D6EEEE">
+</colgroup>
+</table>
+
+<!-- ... (your existing HTML code) ... -->
+<!-- ... (your existing HTML code) ... -->
+
+<div id="select">
+  <select class="form-select" id="statusFilter" onchange="filterTable()">
+    <option value="all" selected>All</option>
+    <option value="Pending">Pending</option>
+    <option value="Current">Current</option>
+    <option value="Completed">Completed</option>
+  </select>
+</div>
+
+
+<script>
+  // Function to filter table based on input text and selected status
+  function filterTable() {
+    var input, filter, statusFilter, table, tr, td, i, j, txtValue, statusValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    statusFilter = document.getElementById("statusFilter");
+    statusValue = statusFilter.value.toLowerCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td");
+      let found = false;
+      let statusMatch = false;
+
+      for (j = 0; j < td.length; j++) {
+        if (td[j]) {
+          txtValue = td[j].textContent || td[j].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            found = true;
+            break;
+          }
+        }
+      }
+
+      let status = td[3].textContent.toLowerCase();
+      if (statusValue === "all" || status === statusValue) {
+        statusMatch = true;
+      }
+
+      if ((found || filter === '') && statusMatch) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+
+  // Function to display case details when a name is clicked
+  function displayCaseDetails(caseArr) {
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+    
+    for (var i = 1; i < rows.length; i++) {
+      var nameCell = rows[i];
+
+      nameCell.addEventListener("click", function() {
+        let caseIndex = Array.prototype.indexOf.call(this.parentNode.children, this) - 2;
+
+        var detailsContainer = document.querySelector(".result-box");
+        detailsContainer.innerHTML = `<p>Case ID: ${caseArr[caseIndex].cin}</p>
+                                      <p>Defender Name: ${caseArr[caseIndex].defName}</p>
+                                      <p>Defender Address: ${caseArr[caseIndex].defAddress}</p>
+                                      <p>Crime Type: ${caseArr[caseIndex].crimeType}</p>
+                                      <p>Committed Date: ${caseArr[caseIndex].comDate}</p>
+                                      <p>Committed Location: ${caseArr[caseIndex].comLocation}</p>
+                                      <p>Arresting Officer Name: ${caseArr[caseIndex].arrOffName}</p>
+                                      <p>Arresting Date: ${caseArr[caseIndex].arrDate}</p>
+                                      <p>Hearing Date: ${caseArr[caseIndex].hearDate}</p>
+                                      <p>Vacant Date: ${caseArr[caseIndex].vacDate}</p>
+                                      <p>Reason: ${caseArr[caseIndex].reason}</p>
+                                      <p>New Hearing Date: ${caseArr[caseIndex].newHearDate}</p>
+                                      <p>Hearing Details: ${caseArr[caseIndex].hearDetails}</p>
+                                      <p>Judge Name: ${caseArr[caseIndex].judgeName}</p>
+                                      <p>PP: ${caseArr[caseIndex].pp}</p>
+                                      <p>Staring Date: ${caseArr[caseIndex].startingDate}</p>
+                                      <p>Completed Date: ${caseArr[caseIndex].endDate}</p>
+                                      <p>Status: ${caseArr[caseIndex].status}</p>`;
+      });
+    }
+  }
+
+  // Function to trigger filtering on keyup in the input field
+  function myFunction() {
+    filterTable();
+  }
+
+  // Initialize filter and click event setup on page load
+  window.onload = function() {
+    getCaseDetails();
+    document.getElementById("myInput").addEventListener("keyup", myFunction);
+    document.getElementById("statusFilter").addEventListener("change", filterTable);
+  };
+  
+        const getCaseDetails = async () => {
+                let b = `/jis/GetCases`;
+                let caseDetails;
+                await fetch(b).then(response => response.text())
+                        .then(data => caseDetails = data);
+                let caseArr = caseDetails.split("+").map(each => {
+                    if (each != "") {
+                        let ss = each.split("|");
+                        return {"cin": ss[0], "defName": ss[1], "defAddress": ss[2], "crimeType": ss[3], "comDate": ss[4], "comLocation": ss[5], "arrOffName": ss[6], "arrDate": ss[7], "hearDate": ss[8], "vacantDate": ss[9], "reason": ss[10], "newHearDate": ss[11], "hearingDetails": ss[12], "judgeName": ss[13], "pp": ss[14], "startingDate": ss[15], "endDate": ss[16], "status": ss[17]};
+                    }
+                    ;
+                });
+                caseArr.splice(-1, 1);
+                renderCaseDetails(caseArr);
+                displayCaseDetails(caseArr);
+            };
+           
+        const renderCaseDetails = caseArr => {
+            var table = document.getElementById("myTable");
+            caseArr.map(eachCase => {
+                let tr = document.createElement("tr");
+                let cid = document.createElement("td");
+                cid.textContent = eachCase.cin;
+                tr.appendChild(cid);
+                let defName = document.createElement("td");
+                defName.textContent = eachCase.defName;
+                tr.appendChild(defName);
+                let crimeType = document.createElement("td");
+                crimeType.textContent = eachCase.crimeType;
+                tr.appendChild(crimeType);
+                let status = document.createElement("td");
+                status.textContent = eachCase.status;
+                tr.appendChild(status);
+                table.appendChild(tr);
+            });
+        };
+</script>
+
+ 
+
+
+</body>
+</html>
